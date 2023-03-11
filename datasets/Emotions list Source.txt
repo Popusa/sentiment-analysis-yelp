@@ -1,0 +1,4 @@
+https://github.com/attreyabhatt/Sentiment-Analysis/blob/master/emotions.txt
+
+
+Data was moved into a csv file, and split by me.
