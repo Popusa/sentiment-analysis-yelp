@@ -99,7 +99,8 @@ USER_INP = simpledialog.askstring(title="Corpus Maker",
 df = pd.read_csv(CURRENT_PATH + "\\" + USER_INP + EXTENSION)
 pipeline = nlp_data_ops()
 df = pipeline.perform_cleaning(df)
-pipeline.remove_specific_text(df)
+## Uncomment this line if using the "raw_yelp_review_data" file.
+#pipeline.remove_specific_text(df)
 corpus = [pipeline.perform_pre_processing(review_corpus) for review_corpus in df['full_review_text']]
 pipeline.save_sent(df)
 df['full_review_text'] = corpus
