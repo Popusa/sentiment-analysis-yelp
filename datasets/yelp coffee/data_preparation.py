@@ -24,22 +24,27 @@ from sklearn import metrics
 from sklearn.naive_bayes import MultinomialNB
 from pathlib import Path
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('wordnet')
-nltk.download('vader_lexicon')
-nltk.download('averaged_perceptron_tagger')
+# nltk.download('punkt')
+# nltk.download('stopwords')
+# nltk.download('wordnet')
+# nltk.download('vader_lexicon')
+# nltk.download('averaged_perceptron_tagger')
 ### IMPORTED LIBRARIES
 
 
 class nlp_data_ops:
-    def perform_cleaning(df):
+    def perform_cleaning(self,df):
         df.drop_duplicates(inplace = True)
         df.isnull().value_counts()
         df.dropna(inplace = True)
         return df
     
-    def perform_pre_processing(df):
+    def remove_specific_text(self,df):
+        #ONLY CALL THIS FUNCTION IF YOU ARE USING THE "raw_yelp_review_data.csv" FILE
+        df['full_review_text'] = [new_text.replace("check-in","") for new_text in df['full_review_text']]
+        df['full_review_text'] = [new_text.lstrip('0123456789.- ') for new_text in df['full_review_text']]
+
+    def perform_pre_processing(self,text):
         text = text.lower()
         text = text.translate(str.maketrans('', '', string.punctuation))
         tokens = nltk.word_tokenize(text)
@@ -50,15 +55,38 @@ class nlp_data_ops:
         lemmatizer = WordNetLemmatizer()
         tokens = [lemmatizer.lemmatize(token[0]) for token in tokens]
         return ' '.join(tokens)
-
-    def save_corpus_csv(df,filename):
-        filepath = Path('datasets/yelp coffee/' + filename + '.csv') 
+    
+    def save_corpus_csv(self,df,filename):
+        filepath = Path(filename + ".csv")
         df.to_csv(filepath,index=False)
 
-    def calculate_sent_polarity(df):
+    def classify_sentiment(self,score):
+        if score['neg'] > score['pos']:
+            return "Negative Sentiment"
+        elif score['neg'] < score['pos']:
+            return "Positive Sentiment"
+        else:
+            return "Neutral Sentiment"
+        
+    def extract_sent_polarity(self,score):
+        return score['compound']
+    
+    def save_sent(self,df):
         sid = SentimentIntensityAnalyzer()
         sent_polarity_info = [sid.polarity_scores(review) for review in df['full_review_text']]
-        sent_polarity_info
-    
+        review_sentiment = [self.classify_sentiment(scores) for scores in sent_polarity_info]
+        sent_polarity = [self.extract_sent_polarity(scores) for scores in sent_polarity_info]
+
+        df['str_sent'] = review_sentiment
+        df['sent_polarity'] = sent_polarity
 
 
+
+df = pd.read_csv("raw_yelp_review_data.csv")
+pipeline = nlp_data_ops()
+df = pipeline.perform_cleaning(df)
+pipeline.remove_specific_text(df)
+corpus = [pipeline.perform_pre_processing(review_corpus) for review_corpus in df['full_review_text']]
+pipeline.save_sent(df)
+df['full_review_text'] = corpus
+pipeline.save_corpus_csv(df,'yelp_coffee_corpus')
