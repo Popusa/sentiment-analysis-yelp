@@ -1,0 +1,1 @@
+IMPORTANT: title of column that has the text should have be "full_review_text" otherwise the script will throw an error.
