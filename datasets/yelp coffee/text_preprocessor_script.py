@@ -1,19 +1,9 @@
 ### IMPORTED LIBRARIES
-import os
-import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import string
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-import tensorflow as tf
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn import metrics
-from sklearn.naive_bayes import MultinomialNB
 from pathlib import Path
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 # nltk.download('punkt')
@@ -96,6 +86,7 @@ ROOT.withdraw()
 USER_INP = simpledialog.askstring(title="Corpus Maker",
                                   prompt="Enter the name of the file (without the file extension) you want to pre-process:")
 
+print("Processing Text...")
 df = pd.read_csv(CURRENT_PATH + "\\" + USER_INP + EXTENSION)
 pipeline = nlp_data_ops()
 df = pipeline.perform_cleaning(df)
@@ -105,3 +96,5 @@ corpus = [pipeline.perform_pre_processing(review_corpus) for review_corpus in df
 pipeline.save_sent(df)
 df['full_review_text'] = corpus
 pipeline.save_corpus_csv(df, USER_INP + "_processed" + EXTENSION)
+print("Text Processing Complete.")
+tk.messagebox.showinfo(title="Corpus Maker", message="Your text data has been transformed!")
