@@ -1,0 +1,1 @@
+Yelp is constantly updating their dataset with more reviews. The dataset used for this project was downloaded on the 20th of april 2023. Therefore, any further updates to the dataset will not be taken into consideration for this project.

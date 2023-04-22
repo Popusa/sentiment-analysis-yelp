@@ -2,6 +2,8 @@
 *.csv.zip
 *.model
 *.docx
+*.tar
+*.json
 dissertation
 saved_models
 saved_embeddings

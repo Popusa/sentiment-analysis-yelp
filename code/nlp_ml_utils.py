@@ -23,7 +23,7 @@ def remove_stop_words(text):
     tokens = [token for token in tokens if token.lower() not in stop_words]
     return ' '.join(tokens)
 
-def get_trained_model(classifier,x_train,x_test,y_train,y_test):
+def get_trained_model(classifier,x_train,y_train):
     model = classifier
     model.fit(x_train, y_train)
     return model
@@ -61,13 +61,10 @@ def show_conf_matrix(model, x_test, y_test):
     plt.show()
 
 def get_roc_auc(y_pred, y_test):
-    # Since sklearn's roc/auc curve,
-    # functions do not work with multi-class problems, the classes will have to be manually binarized
     roc_auc_dict = {}
     unique_classes = set(y_test)
     for per_class in unique_classes:
         other_classes = [chosen_class for chosen_class in unique_classes if chosen_class != per_class]
-        #Binzarizing the classes
         new_y_true = [0 if this_class in other_classes else 1 for this_class in y_test]
         new_y_pred = [0 if that_class in other_classes else 1 for that_class in y_pred]
     
@@ -120,6 +117,12 @@ def encode_sent(sentiments):
         else:
             encoded_sent.append(3)
     return encoded_sent
+
+def perform_cleaning(df):
+    df.drop_duplicates(inplace = True)
+    df.isnull().value_counts()
+    df.dropna(inplace = True)
+    return df
 
 def process_corpus(text):
     text = text.lower()
