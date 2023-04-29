@@ -224,3 +224,8 @@ def create_vector_space_viz(df):
         plt.scatter(*embed_tsne[idx, :], color='steelblue')
         int_to_vocab = {i: word for i, word in enumerate(set(unique_words))}
         plt.annotate(int_to_vocab[idx], (embed_tsne[idx, 0], embed_tsne[idx, 1]), alpha=0.8, fontsize=13, color='black', horizontalalignment='right', verticalalignment='bottom')
+
+def visualize_ratings_pie(labels,range_start,range_end):
+    _, _, autotexts = plt.pie(labels.value_counts(),colors = ['blue','green','red','black','orange'],labels = list(range(range_start,range_end + 1)),autopct= '%1.1f%%')
+    for autotext in autotexts:
+        autotext.set_color('white')
