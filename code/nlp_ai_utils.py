@@ -1,19 +1,4 @@
-import nltk
-import string
-from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
-from sklearn.model_selection import train_test_split
-from sklearn import metrics
-from sklearn.metrics import roc_auc_score
-from sklearn.model_selection import learning_curve
-from sklearn.metrics import ConfusionMatrixDisplay,confusion_matrix
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud
-import pandas as pd
-import collections
-import seaborn as sns
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.manifold import TSNE
+from all_libs_dl import *
 
 def create_train_test_split(X,y,vectorizer=False,test_size = 0.2):
     x_train,x_test,y_train,y_test = train_test_split(X, y, test_size=test_size,stratify = y,random_state = 42)
@@ -168,7 +153,7 @@ def create_wordcloud(df):
     plt.axis('off')
     plt.title('Word Cloud of Unique Words')
 
-def create_pie_chart(df,jupyter = False):
+def create_pie_chart_most_common_words(df,jupyter = False):
     review_text_no_stop_words = pd.Series([remove_stop_words(review) for review in df['full_review_text']])
     # Split the text into words and count their occurrences
     text_data_str = ' '.join(review_text_no_stop_words.tolist())
@@ -190,7 +175,7 @@ def create_pie_chart(df,jupyter = False):
     plt.title('Most Common Words',color=color)
     plt.show()
 
-def create_bar_chart(df):
+def create_bar_chart_most_common_words(df):
     unique_words = set(' '.join(df['full_review_text']).split())
     review_text_no_stop_words = pd.Series([remove_stop_words(review) for review in df['full_review_text']])
 
@@ -204,7 +189,7 @@ def create_bar_chart(df):
     plt.xlabel('Word Count')
     plt.ylabel('Word')
 
-def visualize_ratings(df):
+def visualize_ratings_bar(df):
     sns.countplot(x=df['star_rating'])
     plt.xlabel('Star Rating')
     plt.ylabel('Count')
