@@ -1,4 +1,4 @@
-from all_libs_dl import *
+from archived_all_libs_dl import *
 
 def create_train_test_split(X,y,vectorizer=False,test_size = 0.2):
     x_train,x_test,y_train,y_test = train_test_split(X, y, test_size=test_size,stratify = y,random_state = 42)
@@ -127,14 +127,19 @@ def perform_cleaning(df):
 
 def get_pos_tag(tag):
     if tag.startswith('N'):
+        # noun
         return 'n'
     elif tag.startswith('V'):
+        # verb
         return 'v'
     elif tag.startswith('J'):
+        # adjective
         return 'a'
     elif tag.startswith('R'):
+        # adverb
         return 'r'
     else:
+        # default to noun
         return 'n'
 
 def process_corpus(text):

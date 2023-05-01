@@ -14,7 +14,7 @@ from wordcloud import WordCloud
 import pandas as pd
 import collections
 import seaborn as sns
-from sklearn.feature_extraction.text import TfidfVectorizer,CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.manifold import TSNE
 import requests
 import os
