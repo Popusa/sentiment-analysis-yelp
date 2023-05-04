@@ -29,3 +29,8 @@ from gensim.models import Word2Vec
 from keras.preprocessing.text import Tokenizer
 from keras.layers import Embedding
 from keras.utils import pad_sequences
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.losses import SparseCategoricalCrossentropy
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
+import keras.backend as K
+import datetime
