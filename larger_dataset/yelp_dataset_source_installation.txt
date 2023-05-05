@@ -1,0 +1,27 @@
+https://www.yelp.com/dataset
+
+
+
+Installation Process:
+
+
+1. Go to the link listed above
+
+2. Click on "Download Dataset"
+
+3. Enter the information that is required
+
+4. Install the reviews dataset
+
+5. Extract the zipped file
+
+6. Edit the zipped file and give it the ".tar" file extension
+
+7. Extract the yelp_academic_dataset_review.json file
+
+8. Run the data_splitter.ipynb, and the data_preprocessor.ipynb files, and the data will be split into chunks, and preprocessed accordingly
+
+
+NOTE: Due to the file size of the dataset(s), only the .json file mentioned in step 7 will be found in the directory.
+
+NOTE: These notebooks take a while to run, so as many notebooks in this project. Unless you recieve an error from the python kernel, the files are most likely running correctly.
