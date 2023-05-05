@@ -11,6 +11,10 @@ from sklearn.model_selection import learning_curve
 from sklearn.metrics import ConfusionMatrixDisplay,confusion_matrix
 from sklearn.decomposition import TruncatedSVD
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.svm import SVC
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from xgboost import XGBClassifier
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import pandas as pd
@@ -25,7 +29,7 @@ import tensorflow as tf
 from imblearn.over_sampling import SMOTE
 from xgboost import XGBClassifier
 from sklearn.feature_extraction.text import CountVectorizer
-from gensim.models import Word2Vec
+from gensim.models import Word2Vec, KeyedVectors
 from keras.preprocessing.text import Tokenizer
 from keras.layers import Embedding
 from keras.utils import pad_sequences
