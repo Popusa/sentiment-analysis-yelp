@@ -26,6 +26,7 @@ import requests
 import os
 import pickle
 import tensorflow as tf
+import patoolib
 from imblearn.over_sampling import SMOTE
 from xgboost import XGBClassifier
 from sklearn.feature_extraction.text import CountVectorizer

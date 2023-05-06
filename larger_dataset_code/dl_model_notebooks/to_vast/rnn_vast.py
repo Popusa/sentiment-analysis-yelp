@@ -40,6 +40,9 @@ test_labels = pickle.load(open("data_files/test_labels.pickle", "rb"))
 
 EMBEDDING_LAYER = pickle.load(open("data_files/EMBEDDING_LAYER.pickle", "rb"))
 
+gpu_devices = tf.config.experimental.list_physical_devices('GPU')
+for device in gpu_devices:
+    tf.config.experimental.set_memory_growth(device, True)
 
 tf.keras.backend.clear_session()
 tf.random.set_seed(RANDOM_STATE)

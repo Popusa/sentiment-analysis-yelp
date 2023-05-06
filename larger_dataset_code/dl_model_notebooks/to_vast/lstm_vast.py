@@ -40,14 +40,13 @@ test_labels = pickle.load(open("data_files/test_labels.pickle", "rb"))
 
 EMBEDDING_LAYER = pickle.load(open("data_files/EMBEDDING_LAYER.pickle", "rb"))
 
-
 tf.keras.backend.clear_session()
 tf.random.set_seed(RANDOM_STATE)
 np.random.seed(RANDOM_STATE)
 lstm_model = tf.keras.models.Sequential([
     EMBEDDING_LAYER,
-    tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(64,recurrent_dropout = 0.3 , dropout = 0.3, return_sequences = True)),
-    tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(32,recurrent_dropout = 0.1 , dropout = 0.1)),
+    tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(64,dropout = 0.3, return_sequences = True)),
+    tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(32,dropout = 0.1)),
     tf.keras.layers.Dense(512, activation = "relu"),
     tf.keras.layers.Dense(5, activation = "softmax")
 ])
