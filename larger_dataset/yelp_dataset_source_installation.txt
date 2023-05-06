@@ -25,3 +25,7 @@ Installation Process:
 NOTE: Due to the file size of the dataset(s), only the .json file mentioned in step 7 will be found in the directory.
 
 NOTE: These notebooks take a while to run, so as many notebooks in this project. Unless you recieve an error from the python kernel, the files are most likely running correctly.
+
+NOTE: The following link is useful, however the dataset provided may not be the same as the one used in this project (read the disclaimer text file for more context): 
+
+=> https://www.kaggle.com/datasets/yelp-dataset/yelp-dataset?select=yelp_academic_dataset_review.json

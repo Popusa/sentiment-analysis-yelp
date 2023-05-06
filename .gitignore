@@ -10,4 +10,3 @@ saved_embeddings
 vast
 __pycache__
 glove_files
-word2vec_model_sklearn.pickle
