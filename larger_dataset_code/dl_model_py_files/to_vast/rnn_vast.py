@@ -27,7 +27,7 @@ get_chunks(CLASS_WEIGHTS_URL,0,1,'class_weights','data_files/','.pickle',False)
 class_weights = pickle.load(open("data_files/class_weights.pickle", "rb"))
 
 train_set_padded = pickle.load(open("data_files/train_set_padded.pickle", "rb"))
-  
+
 train_labels = pickle.load(open("data_files/train_labels.pickle", "rb"))
 
 valid_set_padded = pickle.load(open("data_files/valid_set_padded.pickle", "rb"))

@@ -258,6 +258,7 @@ def get_chunks(urls,limit=0,verbose = 1,base_name = "temp",file_path="",file_for
             for chunk in r.iter_content():
                 #save file in the current directory of the notebook
                 fd.write(chunk)
+        print(f"{file_name} was downloaded successfully.")
 
 def get_all_file_names(base_name,limit_num):
     return [base_name + str(num) for num in range(1,limit_num + 1)]
