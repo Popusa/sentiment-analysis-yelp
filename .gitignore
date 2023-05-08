@@ -11,3 +11,7 @@ vast
 __pycache__
 glove_files
 ready_for_models
+smote_x_y_train.pickle
+word2vec_model_sklearn.pickle
+sent_data.pickle
+unique_words.pickle

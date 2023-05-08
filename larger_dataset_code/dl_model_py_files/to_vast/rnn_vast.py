@@ -20,7 +20,7 @@ if os.path.exists("data_files"):
 
 get_chunks(READY_DATA_URL,0,1,'ready_for_models','data_files/','.rar',False)
 
-patoolib.extract_archive('data_files/ready_for_models.rar', outdir = 'data_files')
+Archive(os.path.join('data_files/',"ready_for_models.rar")).extractall('data_files')
 
 get_chunks(CLASS_WEIGHTS_URL,0,1,'class_weights','data_files/','.pickle',False)
 

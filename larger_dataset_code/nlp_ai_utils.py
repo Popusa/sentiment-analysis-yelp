@@ -258,7 +258,8 @@ def get_chunks(urls,limit=0,verbose = 1,base_name = "temp",file_path="",file_for
             for chunk in r.iter_content():
                 #save file in the current directory of the notebook
                 fd.write(chunk)
-        print(f"{file_name} was downloaded successfully.")
+        if i % verbose == 0:
+            print(f"{file_name} was downloaded successfully.")
 
 def get_all_file_names(base_name,limit_num):
     return [base_name + str(num) for num in range(1,limit_num + 1)]
@@ -290,3 +291,19 @@ def read_glove_vector(glove_vec):
             word_to_vec_map[curr_word] = np.array(w_line[1:], dtype=np.float64)
             
     return word_to_vec_map
+
+class MetricsCallback(Callback):
+    def __init__(self, test_data, y_true):
+        # Should be the label encoding of your classes
+        self.y_true = y_true
+        self.test_data = test_data
+        
+    def on_epoch_end(self, epoch, logs=None):
+        # Here we get the probabilities
+        y_pred = self.model.predict(self.test_data)
+        # Here we get the actual classes
+        y_pred = tf.argmax(y_pred,axis=1)
+        # Actual dictionary
+        report_dictionary = classification_report(self.y_true, y_pred, output_dict = True)
+        # Only printing the report
+        print(classification_report(self.y_true,y_pred,output_dict=False))

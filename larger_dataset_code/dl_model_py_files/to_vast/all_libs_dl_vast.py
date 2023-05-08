@@ -9,6 +9,7 @@ from sklearn import metrics
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import learning_curve
 from sklearn.metrics import ConfusionMatrixDisplay,confusion_matrix
+from sklearn.metrics import classification_report 
 from sklearn.decomposition import TruncatedSVD
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import MultinomialNB
@@ -26,8 +27,11 @@ import requests
 import os
 import pickle
 import tensorflow as tf
+import itertools
 import patoolib
+from pyunpack import Archive
 from imblearn.over_sampling import SMOTE
+from imblearn.under_sampling import RandomUnderSampler
 from xgboost import XGBClassifier
 from sklearn.feature_extraction.text import CountVectorizer
 from gensim.models import Word2Vec, KeyedVectors
@@ -36,6 +40,7 @@ from keras.layers import Embedding
 from keras.utils import pad_sequences
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import SparseCategoricalCrossentropy
+from tensorflow.keras.callbacks import Callback
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 import keras.backend as K
 import datetime
