@@ -42,7 +42,6 @@ from keras.layers import Embedding
 from keras.utils import pad_sequences
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import SparseCategoricalCrossentropy
-from tensorflow.keras.callbacks import Callback
-from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
+from tensorflow.keras.callbacks import Callback, EarlyStopping, ReduceLROnPlateau
 import keras.backend as K
 import datetime
