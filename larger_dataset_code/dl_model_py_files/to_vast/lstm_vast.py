@@ -18,11 +18,14 @@ EPOCHS = 15
 if os.path.exists("data_files"):
     os.mkdir("data_files")
 
-get_chunks(READY_DATA_URL,0,1,'ready_for_models','data_files/','.rar',False)
+if os.path.exists("data_files/ready_for_models"):
+    os.mkdir("data_files/ready_for_models")
+
+get_chunks([READY_DATA_URL],0,1,'ready_for_models','data_files/','.rar',False)
 
 Archive(os.path.join('data_files/',"ready_for_models.rar")).extractall('data_files')
 
-get_chunks(CLASS_WEIGHTS_URL,0,1,'class_weights','data_files/','.pickle',False)
+get_chunks([CLASS_WEIGHTS_URL],0,1,'class_weights','data_files/','.pickle',False)
 
 class_weights = pickle.load(open("data_files/class_weights.pickle", "rb"))
 

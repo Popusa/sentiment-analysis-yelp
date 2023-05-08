@@ -11,9 +11,11 @@ from sklearn.model_selection import learning_curve
 from sklearn.metrics import ConfusionMatrixDisplay,confusion_matrix
 from sklearn.metrics import classification_report 
 from sklearn.decomposition import TruncatedSVD
+from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import MultinomialNB
-from sklearn.svm import SVC
+from sklearn.ensemble import BaggingClassifier
+from sklearn.linear_model import LogisticRegression
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from xgboost import XGBClassifier
 import matplotlib.pyplot as plt

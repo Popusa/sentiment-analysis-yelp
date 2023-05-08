@@ -15,3 +15,8 @@ smote_x_y_train.pickle
 word2vec_model_sklearn.pickle
 sent_data.pickle
 unique_words.pickle
+archived_files
+rf.pickle
+lr.pickle
+bag_mnnb.pickle
+xgb.pickle
