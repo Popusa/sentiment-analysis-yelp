@@ -11,6 +11,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import learning_curve
 from sklearn.metrics import ConfusionMatrixDisplay,confusion_matrix
 from sklearn.metrics import classification_report 
+from sklearn.metrics import f1_score
 from sklearn.decomposition import TruncatedSVD
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier

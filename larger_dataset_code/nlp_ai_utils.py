@@ -324,6 +324,8 @@ class MetricsCallback(Callback):
         report_dictionary = classification_report(self.y_true, y_pred, output_dict = True)
         # Only printing the report
         print(classification_report(self.y_true,y_pred,output_dict=False))
+        macro_f1_pred = f1_score(self.y_true, y_pred, average='weighted',zero_division=0)
+        print(f"Macro Weighted F1-Score: {macro_f1_pred}")
 
 def get_classes_count(y,start_label = 0):
     """
