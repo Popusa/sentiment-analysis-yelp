@@ -98,6 +98,13 @@ def show_metrics(clf_name,model,x_test,y_test,y_pred,X,y,cv = 5):
     show_learning_curve(model, X, y,cv = cv)
 
 def translate_labels(labels):
+
+    """
+    This function takes in all labels, and converts them to their corresponding sentiment.
+
+    labels: x => list of integers, Required
+    """
+
     translated_labels = []
     for label in labels:
         if label > 3:
@@ -108,21 +115,35 @@ def translate_labels(labels):
             translated_labels.append('Neutral Sentiment')
     return translated_labels
 
-def encode_sent(sentiments):
+def encode_sent(sentiments,positive_label = 1,negative_label = 2,neutral_label = 3):
+
+    """
+    This function takes in all translated labels (labels transformed for star ratings to sentiments), and converts them to numerical values.
+
+    sentiments: x => list of strings, Required
+
+    positive_label: x => Positive Integer, Default = 1
+
+    negative_label: x => Positive Integer, Default = 2
+
+    neutral_label: x => Positive Integer, Default = 3
+
+    """
+
     translated_labels = sentiments
     encoded_sent = []
     for label in translated_labels:
         if label == 'Positive Sentiment':
-            encoded_sent.append(1)
+            encoded_sent.append(positive_label)
         elif label == 'Negative Sentiment':
-            encoded_sent.append(2)
+            encoded_sent.append(negative_label)
         else:
-            encoded_sent.append(3)
+            encoded_sent.append(neutral_label)
     return encoded_sent
 
 def perform_cleaning(df):
     df.drop_duplicates(inplace = True)
-    df.isnull().value_counts()
+    df['full_review_text'].replace('', np.nan, inplace=True)
     df.dropna(inplace = True)
     return df
 
@@ -223,20 +244,15 @@ def create_vector_space_viz(df):
         int_to_vocab = {i: word for i, word in enumerate(set(unique_words))}
         plt.annotate(int_to_vocab[idx], (embed_tsne[idx, 0], embed_tsne[idx, 1]), alpha=0.8, fontsize=13, color='black', horizontalalignment='right', verticalalignment='bottom')
 
-def visualize_ratings_pie(labels,range_start,range_end):
-    _, _, autotexts = plt.pie(labels.value_counts(),colors = ['blue','green','red','black','orange'],labels = list(range(range_start,range_end + 1)),autopct= '%1.1f%%')
-    for autotext in autotexts:
-        autotext.set_color('white')
-
-def custom_f1_score(y_true, y_pred):
-    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
-    possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
-    predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
-    precision = true_positives / (predicted_positives + K.epsilon())
-    recall = true_positives / (possible_positives + K.epsilon())
-    f1_val = 2*(precision*recall)/(precision+recall+K.epsilon())
-    return f1_val
-
+def visualize_ratings_pie(labels,range_start=0,range_end=0,use_dict=False):
+    if use_dict:
+        _, _, autotexts = plt.pie(labels.value_counts(),colors = ['blue','green','red','black','orange'],labels = list(labels.unique()),autopct= '%1.1f%%')
+        for autotext in autotexts:
+            autotext.set_color('white')
+    else:
+        _, _, autotexts = plt.pie(labels.value_counts(),colors = ['blue','green','red','black','orange'],labels = list(range(range_start,range_end + 1)),autopct= '%1.1f%%')
+        for autotext in autotexts:
+            autotext.set_color('white')
 
 def get_chunks(urls,limit=0,verbose = 1,base_name = "temp",file_path="",file_format='.csv',loading_chunks = True):
     #downloads all data from their url(s)
@@ -308,3 +324,27 @@ class MetricsCallback(Callback):
         report_dictionary = classification_report(self.y_true, y_pred, output_dict = True)
         # Only printing the report
         print(classification_report(self.y_true,y_pred,output_dict=False))
+
+def get_classes_count(y,start_label = 0):
+    """
+
+    takes in a list of labels, and returns a list of dictionaries containing the label as the key, and the number of samples for the label as a value.
+
+    start_label: n | 0
+            A positive integer that indicates the first numerical label in the list. If not given, the first label will be given the default value of 0.
+
+    """
+    samples = []
+    y_unique_labels = list(y.unique())
+    for i in range(start_label,len(y_unique_labels)):
+        samples.append({i:len([label for label in y if label == y_unique_labels[i]])})
+    return samples
+
+def get_class_weights(labels_dict,mu=0.15):
+    total = sum(labels_dict.values())
+    keys = labels_dict.keys()
+    weights = dict()
+    for i in keys:
+        score = np.log((mu*total)/float(labels_dict[i]))
+        weights[i] = score if score > 1 else 1
+    return weights
