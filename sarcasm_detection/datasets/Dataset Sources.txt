@@ -1,0 +1,8 @@
+News Headlines: https://www.kaggle.com/datasets/rmisra/news-headlines-dataset-for-sarcasm-detection?select=Sarcasm_Headlines_Dataset_v2.json
+
+Sarcasm on Reddit: https://www.kaggle.com/datasets/danofer/sarcasm?select=train-balanced-sarcasm.csv
+
+MUStARD: https://github.com/soujanyaporia/MUStARD/blob/master/data/sarcasm_data.json
+
+
+Note: the MUStARD dataset was forked, and the dataset was pulled out manually. This is important to mention for anyone planning to download this dataset off of the github repo.

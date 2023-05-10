@@ -1,5 +1,9 @@
 from updating_values import CONST_RANDOM_STATE
 import nltk
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('wordnet')
 import string
 import numpy as np
 from nltk.corpus import stopwords

@@ -350,3 +350,13 @@ def get_class_weights(labels_dict,mu=0.15):
         score = np.log((mu*total)/float(labels_dict[i]))
         weights[i] = score if score > 1 else 1
     return weights
+
+def get_dependencies(url,file_name,file_extension):
+    if os.path.exists(file_name + file_extension):
+        return print(file_name + " already exists.")
+    else:
+        print(f"downloading {file_name}...")
+        r = requests.get(url)
+        with open(file_name + file_extension, 'wb') as fd:
+            for chunk in r.iter_content():
+                fd.write(chunk)

@@ -1,5 +1,6 @@
 *.csv
 *.csv.zip
+*.zip
 *.model
 *.docx
 *.tar
@@ -20,3 +21,4 @@ rf.pickle
 lr.pickle
 bag_mnnb.pickle
 xgb.pickle
+archived_*
