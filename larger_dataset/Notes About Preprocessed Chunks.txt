@@ -1,0 +1,3 @@
+1. This particular dataset did not get its stopwords removed.
+
+2. If any further issues with data cleaning arise, they will be solved either using the AI utils functions, or in the jupyter notebooks that belong to Sentiment Analysis.
