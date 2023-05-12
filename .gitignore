@@ -22,3 +22,4 @@ lr.pickle
 bag_mnnb.pickle
 xgb.pickle
 archived_*
+sd_pickle_files
