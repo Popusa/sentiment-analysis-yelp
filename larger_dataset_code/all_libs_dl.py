@@ -39,7 +39,7 @@ import tensorflow as tf
 import itertools
 import patoolib
 from pyunpack import Archive
-from imblearn.over_sampling import SMOTE
+from imblearn.over_sampling import RandomOverSampler,SMOTE
 from imblearn.under_sampling import RandomUnderSampler
 from xgboost import XGBClassifier
 from sklearn.feature_extraction.text import CountVectorizer
@@ -50,6 +50,5 @@ from keras.utils import pad_sequences
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import SparseCategoricalCrossentropy
 from tensorflow.keras.callbacks import Callback, EarlyStopping, ReduceLROnPlateau
-from keras_tqdm import TQDMNotebookCallback
 import keras.backend as K
 import datetime
