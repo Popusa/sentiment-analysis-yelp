@@ -1,0 +1,17 @@
+h1 {
+    text-align: center;
+  }
+  
+input {
+    margin: 10px;
+}
+
+button{
+    margin: 10px;
+  }
+  
+#outputArea {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
