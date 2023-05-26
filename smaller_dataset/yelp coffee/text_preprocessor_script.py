@@ -43,13 +43,25 @@ class nlp_data_ops:
             df['star_rating'] = df['star_rating'].str[:2]
             df['star_rating'] = [int(rating) for rating in df['star_rating']]
 
+    def get_pos_tag(tag):
+        if tag.startswith('N'):
+            return 'n'
+        elif tag.startswith('V'):
+            return 'v'
+        elif tag.startswith('J'):
+            return 'a'
+        elif tag.startswith('R'):
+            return 'r'
+        else:
+            return 'n'
+
     def perform_pre_processing(self,text):
         text = text.lower()
         text = text.translate(str.maketrans('', '', string.punctuation))
         tokens = nltk.word_tokenize(text)
         tokens = nltk.pos_tag(tokens)
         lemmatizer = WordNetLemmatizer()
-        tokens = [lemmatizer.lemmatize(token[0]) for token in tokens]
+        tokens = [lemmatizer.lemmatize(token[0],pos=get_pos_tag(token[1])) for token in tokens]
         return ' '.join(tokens)
     
     def save_corpus_csv(self,df,filename):
