@@ -187,28 +187,6 @@ def create_wordcloud(df):
     plt.axis('off')
     plt.title('Word Cloud of Unique Words')
 
-def create_pie_chart_most_common_words(df,jupyter = False):
-    review_text_no_stop_words = pd.Series([remove_stop_words(review) for review in df['full_review_text']])
-    # Split the text into words and count their occurrences
-    text_data_str = ' '.join(review_text_no_stop_words.tolist())
-
-    # Split the text into words and count their occurrences
-    word_counts = collections.Counter(text_data_str.split())
-
-    # Get the most common words and their counts
-    most_common = word_counts.most_common(5)
-    labels = [word[0] for word in most_common]
-    values = [word[1] for word in most_common]
-
-    # Create the pie chart
-    if jupyter:
-        color = "black"
-    else:
-        color = "white"
-    plt.pie(values, labels=labels, autopct='%1.1f%%', textprops={'color': color})
-    plt.title('Most Common Words',color=color)
-    plt.show()
-
 def create_bar_chart_most_common_words(df):
     unique_words = set(' '.join(df['full_review_text']).split())
     review_text_no_stop_words = pd.Series([remove_stop_words(review) for review in df['full_review_text']])
