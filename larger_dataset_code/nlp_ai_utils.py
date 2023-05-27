@@ -90,12 +90,19 @@ def show_learning_curve(model, X, y,cv = 5):
     ax.set_title('Learning Curve')
     plt.show()
 
-def show_metrics(clf_name,model,x_test,y_test,y_pred,X,y,cv = 5):
-    print("PRINTING METRICS FOR " + str(clf_name))
-    show_conf_matrix(model, x_test, y_test)
-    get_roc_auc(y_pred, y_test)
-    show_classification_report(y_test,y_pred)
-    show_learning_curve(model, X, y,cv = cv)
+def show_metrics(clf_name,model,x_test,y_test,y_pred,X,y,cv = 5,show_cm=True,show_roc_auc=True,show_cr=True,show_lr=True):
+    if not show_cm and not show_roc_auc and not show_cr and not show_lr:
+        print("All Metrics are turned off. Skipping.")
+    else:
+        print("PRINTING METRIC(S) FOR " + str(clf_name))
+        if show_cm:
+            show_conf_matrix(model, x_test, y_test)  
+        if show_roc_auc:
+            get_roc_auc(y_pred, y_test)
+        if show_cr:
+            show_classification_report(y_test,y_pred)
+        if show_lr:
+            show_learning_curve(model, X, y,cv = cv)
 
 def translate_labels(labels):
 
