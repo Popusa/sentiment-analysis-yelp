@@ -43,7 +43,7 @@ class nlp_data_ops:
             df['star_rating'] = df['star_rating'].str[:2]
             df['star_rating'] = [int(rating) for rating in df['star_rating']]
 
-    def get_pos_tag(tag):
+    def get_pos_tag(self,tag):
         if tag.startswith('N'):
             return 'n'
         elif tag.startswith('V'):
@@ -54,15 +54,18 @@ class nlp_data_ops:
             return 'r'
         else:
             return 'n'
-
+        
     def perform_pre_processing(self,text):
-        text = text.lower()
-        text = text.translate(str.maketrans('', '', string.punctuation))
+        stopwords = nltk.corpus.stopwords.words('english')
         tokens = nltk.word_tokenize(text)
-        tokens = nltk.pos_tag(tokens)
-        lemmatizer = WordNetLemmatizer()
-        tokens = [lemmatizer.lemmatize(token[0],pos=get_pos_tag(token[1])) for token in tokens]
-        return ' '.join(tokens)
+        lower = [word.lower() for word in tokens]
+        no_stopwords = [word for word in lower if word not in stopwords]
+        no_alpha = [word for word in no_stopwords if word.isalpha()]
+        tokens_tagged = nltk.pos_tag(no_alpha)
+        lemmatizer = nltk.WordNetLemmatizer()
+        lemmatized_text = [lemmatizer.lemmatize(word[0],pos=self.get_pos_tag(word[1])) for word in tokens_tagged]
+        preprocessed_text = lemmatized_text
+        return ' '.join(preprocessed_text)
     
     def save_corpus_csv(self,df,filename):
         filepath = CURRENT_PATH + "\\" + filename

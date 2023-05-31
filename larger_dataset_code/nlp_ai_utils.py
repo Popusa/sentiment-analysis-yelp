@@ -211,8 +211,8 @@ def create_bar_chart_most_common_words(df):
     plt.xlabel('Word Count')
     plt.ylabel('Word')
 
-def visualize_ratings_bar(df):
-    sns.countplot(x=df['star_rating'])
+def visualize_ratings_bar(labels):
+    sns.countplot(x=labels)
     plt.xlabel('Star Rating')
     plt.ylabel('Count')
     plt.title('Distribution of Star Ratings')
@@ -232,13 +232,14 @@ def create_vector_space_viz(df):
         int_to_vocab = {i: word for i, word in enumerate(set(unique_words))}
         plt.annotate(int_to_vocab[idx], (embed_tsne[idx, 0], embed_tsne[idx, 1]), alpha=0.8, fontsize=13, color='black', horizontalalignment='right', verticalalignment='bottom')
 
-def visualize_ratings_pie(labels,range_start=0,range_end=0,use_dict=False):
+def visualize_ratings_pie(labels,use_dict=False):
     if use_dict:
-        _, _, autotexts = plt.pie(labels.value_counts(),colors = ['blue','green','red','black','orange'],labels = list(labels.unique()),autopct= '%1.1f%%')
+        _, _, autotexts = plt.pie(labels.value_counts(),colors = ['blue','green','red','black','orange'],labels = list(labels.unique()),textprops={'color':"w"},autopct= '%1.1f%%')
         for autotext in autotexts:
             autotext.set_color('white')
     else:
-        _, _, autotexts = plt.pie(labels.value_counts(),colors = ['blue','green','red','black','orange'],labels = list(range(range_start,range_end + 1)),autopct= '%1.1f%%')
+        labels_dict = dict(labels.value_counts())
+        _, _, autotexts = plt.pie(labels_dict.values(),colors = ['blue','green','red','black','orange'],labels=labels_dict.keys(),textprops={'color':"w"},autopct= '%1.1f%%')
         for autotext in autotexts:
             autotext.set_color('white')
 
