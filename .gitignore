@@ -6,7 +6,7 @@
 *.tar
 *.json
 dissertation
-saved_models
+saved_models*
 saved_embeddings
 vast
 __pycache__

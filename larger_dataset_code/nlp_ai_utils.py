@@ -166,12 +166,16 @@ def get_pos_tag(tag):
     else:
         return 'n'
 
-def process_corpus(text):
-    stopwords = nltk.corpus.stopwords.words('english')
+def process_corpus(text,remove_stop_words = False):
+    if remove_stop_words:
+        stopwords = nltk.corpus.stopwords.words('english')
     tokens = nltk.word_tokenize(text)
     lower = [word.lower() for word in tokens]
-    no_stopwords = [word for word in lower if word not in stopwords]
-    no_alpha = [word for word in no_stopwords if word.isalpha()]
+    if remove_stop_words:
+        no_stopwords = [word for word in lower if word not in stopwords]
+        no_alpha = [word for word in no_stopwords if word.isalpha()]
+    else:
+        no_alpha = [word for word in lower if word.isalpha()]
     tokens_tagged = nltk.pos_tag(no_alpha)
     lemmatizer = nltk.WordNetLemmatizer()
     lemmatized_text = [lemmatizer.lemmatize(word[0],pos=get_pos_tag(word[1])) for word in tokens_tagged]

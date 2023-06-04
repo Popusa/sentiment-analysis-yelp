@@ -90,12 +90,19 @@ def show_learning_curve(model, X, y,cv = 5):
     ax.set_title('Learning Curve')
     plt.show()
 
-def show_metrics(clf_name,model,x_test,y_test,y_pred,X,y,cv = 5):
-    print("PRINTING METRICS FOR " + str(clf_name))
-    show_conf_matrix(model, x_test, y_test)
-    get_roc_auc(y_pred, y_test)
-    show_classification_report(y_test,y_pred)
-    show_learning_curve(model, X, y,cv = cv)
+def show_metrics(clf_name,model,x_test,y_test,y_pred,X,y,cv = 5,show_cm=True,show_roc_auc=True,show_cr=True,show_lr=True):
+    if not show_cm and not show_roc_auc and not show_cr and not show_lr:
+        print("All Metrics are turned off. Skipping.")
+    else:
+        print("PRINTING METRIC(S) FOR " + str(clf_name))
+        if show_cm:
+            show_conf_matrix(model, x_test, y_test)  
+        if show_roc_auc:
+            get_roc_auc(y_pred, y_test)
+        if show_cr:
+            show_classification_report(y_test,y_pred)
+        if show_lr:
+            show_learning_curve(model, X, y,cv = cv)
 
 def translate_labels(labels):
 
@@ -159,14 +166,21 @@ def get_pos_tag(tag):
     else:
         return 'n'
 
-def process_corpus(text):
-    text = text.lower()
-    text = text.translate(str.maketrans('', '', string.punctuation))
+def process_corpus(text,remove_stop_words = False):
+    if remove_stop_words:
+        stopwords = nltk.corpus.stopwords.words('english')
     tokens = nltk.word_tokenize(text)
-    tokens = nltk.pos_tag(tokens)
-    lemmatizer = WordNetLemmatizer()
-    tokens = [lemmatizer.lemmatize(token[0],pos=get_pos_tag(token[1])) for token in tokens]
-    return ' '.join(tokens)
+    lower = [word.lower() for word in tokens]
+    if remove_stop_words:
+        no_stopwords = [word for word in lower if word not in stopwords]
+        no_alpha = [word for word in no_stopwords if word.isalpha()]
+    else:
+        no_alpha = [word for word in lower if word.isalpha()]
+    tokens_tagged = nltk.pos_tag(no_alpha)
+    lemmatizer = nltk.WordNetLemmatizer()
+    lemmatized_text = [lemmatizer.lemmatize(word[0],pos=get_pos_tag(word[1])) for word in tokens_tagged]
+    preprocessed_text = lemmatized_text
+    return ' '.join(preprocessed_text)
 
 def classify_sentiment(score):
     if score['neg'] > score['pos']:
@@ -186,28 +200,6 @@ def create_wordcloud(df):
     plt.imshow(unique_wordcloud)
     plt.axis('off')
     plt.title('Word Cloud of Unique Words')
-
-def create_pie_chart_most_common_words(df,jupyter = False):
-    review_text_no_stop_words = pd.Series([remove_stop_words(review) for review in df['full_review_text']])
-    # Split the text into words and count their occurrences
-    text_data_str = ' '.join(review_text_no_stop_words.tolist())
-
-    # Split the text into words and count their occurrences
-    word_counts = collections.Counter(text_data_str.split())
-
-    # Get the most common words and their counts
-    most_common = word_counts.most_common(5)
-    labels = [word[0] for word in most_common]
-    values = [word[1] for word in most_common]
-
-    # Create the pie chart
-    if jupyter:
-        color = "black"
-    else:
-        color = "white"
-    plt.pie(values, labels=labels, autopct='%1.1f%%', textprops={'color': color})
-    plt.title('Most Common Words',color=color)
-    plt.show()
 
 def create_bar_chart_most_common_words(df):
     unique_words = set(' '.join(df['full_review_text']).split())
