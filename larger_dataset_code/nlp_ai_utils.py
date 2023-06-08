@@ -236,14 +236,14 @@ def create_vector_space_viz(df):
         int_to_vocab = {i: word for i, word in enumerate(set(unique_words))}
         plt.annotate(int_to_vocab[idx], (embed_tsne[idx, 0], embed_tsne[idx, 1]), alpha=0.8, fontsize=13, color='black', horizontalalignment='right', verticalalignment='bottom')
 
-def visualize_ratings_pie(labels,use_dict=False):
+def visualize_ratings_pie(labels,use_dict=False,text_color = 'black'):
     if use_dict:
-        _, _, autotexts = plt.pie(labels.value_counts(),colors = ['blue','green','red','black','orange'],labels = list(labels.unique()),textprops={'color':"w"},autopct= '%1.1f%%')
+        _, _, autotexts = plt.pie(labels.value_counts(),colors = ['blue','green','red','black','orange'],labels = list(labels.unique()),textprops={'color':text_color},autopct= '%1.1f%%')
         for autotext in autotexts:
             autotext.set_color('white')
     else:
         labels_dict = dict(labels.value_counts())
-        _, _, autotexts = plt.pie(labels_dict.values(),colors = ['blue','green','red','black','orange'],labels=labels_dict.keys(),textprops={'color':"w"},autopct= '%1.1f%%')
+        _, _, autotexts = plt.pie(labels_dict.values(),colors = ['blue','green','red','black','orange'],labels=labels_dict.keys(),textprops={'color':text_color},autopct= '%1.1f%%')
         for autotext in autotexts:
             autotext.set_color('white')
 

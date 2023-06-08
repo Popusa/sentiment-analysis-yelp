@@ -35,7 +35,6 @@ from sklearn.manifold import TSNE
 import requests
 import os
 import pickle
-import tensorflow as tf
 import itertools
 import patoolib
 from pyunpack import Archive

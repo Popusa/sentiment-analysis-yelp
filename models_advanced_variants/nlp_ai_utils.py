@@ -236,14 +236,14 @@ def create_vector_space_viz(df):
         int_to_vocab = {i: word for i, word in enumerate(set(unique_words))}
         plt.annotate(int_to_vocab[idx], (embed_tsne[idx, 0], embed_tsne[idx, 1]), alpha=0.8, fontsize=13, color='black', horizontalalignment='right', verticalalignment='bottom')
 
-def visualize_ratings_pie(labels,use_dict=False):
+def visualize_ratings_pie(labels,use_dict=False,text_color = 'black'):
     if use_dict:
-        _, _, autotexts = plt.pie(labels.value_counts(),colors = ['blue','green','red','black','orange'],labels = list(labels.unique()),textprops={'color':"w"},autopct= '%1.1f%%')
+        _, _, autotexts = plt.pie(labels.value_counts(),colors = ['blue','green','red','black','orange'],labels = list(labels.unique()),textprops={'color':text_color},autopct= '%1.1f%%')
         for autotext in autotexts:
             autotext.set_color('white')
     else:
         labels_dict = dict(labels.value_counts())
-        _, _, autotexts = plt.pie(labels_dict.values(),colors = ['blue','green','red','black','orange'],labels=labels_dict.keys(),textprops={'color':"w"},autopct= '%1.1f%%')
+        _, _, autotexts = plt.pie(labels_dict.values(),colors = ['blue','green','red','black','orange'],labels=labels_dict.keys(),textprops={'color':text_color},autopct= '%1.1f%%')
         for autotext in autotexts:
             autotext.set_color('white')
 
@@ -302,23 +302,23 @@ def read_glove_vector(glove_vec):
             
     return word_to_vec_map
 
-# class MetricsCallback(Callback):
-#     def __init__(self, test_data, y_true):
-#         # Should be the label encoding of your classes
-#         self.y_true = y_true
-#         self.test_data = test_data
+class MetricsCallback(Callback):
+    def __init__(self, test_data, y_true):
+        # Should be the label encoding of your classes
+        self.y_true = y_true
+        self.test_data = test_data
         
-#     def on_epoch_end(self, epoch, logs=None):
-#         # Here we get the probabilities
-#         y_pred = self.model.predict(self.test_data)
-#         # Here we get the actual classes
-#         y_pred = tf.argmax(y_pred,axis=1)
-#         # Actual dictionary
-#         report_dictionary = classification_report(self.y_true, y_pred, output_dict = True)
-#         # Only printing the report
-#         print(classification_report(self.y_true,y_pred,output_dict=False))
-#         macro_f1_pred = f1_score(self.y_true, y_pred, average='weighted',zero_division=0)
-#         print(f"Macro Weighted F1-Score: {macro_f1_pred}")
+    def on_epoch_end(self, epoch, logs=None):
+        # Here we get the probabilities
+        y_pred = self.model.predict(self.test_data)
+        # Here we get the actual classes
+        y_pred = tf.argmax(y_pred,axis=1)
+        # Actual dictionary
+        report_dictionary = classification_report(self.y_true, y_pred, output_dict = True)
+        # Only printing the report
+        print(classification_report(self.y_true,y_pred,output_dict=False))
+        macro_f1_pred = f1_score(self.y_true, y_pred, average='weighted',zero_division=0)
+        print(f"Macro Weighted F1-Score: {macro_f1_pred}")
 
 def get_classes_count(y,start_label = 0):
     """

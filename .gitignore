@@ -24,3 +24,4 @@ xgb.pickle
 archived_*
 sd_pickle_files
 sd_saved_models
+web_app/models
