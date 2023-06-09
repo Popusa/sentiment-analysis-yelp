@@ -35,7 +35,6 @@ from sklearn.manifold import TSNE
 import requests
 import os
 import pickle
-import tensorflow as tf
 import itertools
 import patoolib
 from pyunpack import Archive
@@ -47,7 +46,6 @@ from gensim.models import Word2Vec, KeyedVectors
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
-from transformers import BertTokenizer, TFBertModel
 from keras.preprocessing.text import Tokenizer
 from keras.layers import Embedding
 from keras.utils import pad_sequences
